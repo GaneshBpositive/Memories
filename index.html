@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Journey Together</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 50px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .screen {
+            display: none;
+            animation: fadeIn 0.6s ease-in;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .emoji {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        h1 {
+            color: #333;
+            font-size: 2.2em;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        p {
+            color: #666;
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .question {
+            font-size: 1.3em;
+            color: #444;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            margin: 10px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-option {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 12px 30px;
+            font-size: 1em;
+            display: block;
+            width: 100%;
+            margin: 15px 0;
+        }
+
+        .btn-option:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .progress {
+            background: #e0e0e0;
+            height: 8px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .heart-container {
+            margin: 20px 0;
+        }
+
+        .heart {
+            display: inline-block;
+            color: #ff6b6b;
+            font-size: 30px;
+            margin: 0 5px;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .photo-item {
+            width: 100%;
+            height: 150px;
+            border-radius: 15px;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .photo-item:hover {
+            transform: scale(1.05);
+        }
+
+        .sparkle {
+            position: fixed;
+            pointer-events: none;
+            animation: sparkle 1s ease-out forwards;
+        }
+
+        @keyframes sparkle {
+            0% {
+                opacity: 1;
+                transform: scale(0);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(2);
+            }
+        }
+
+        .question-number {
+            color: #999;
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Welcome Screen -->
+        <div class="screen active" id="welcome">
+            <div class="emoji">💕</div>
+            <h1>You & Me</h1>
+            <p>Thank you for making this trip so special.<br>Your presence made every moment magical.</p>
+            <div class="heart-container">
+                <span class="heart">❤️</span>
+                <span class="heart">❤️</span>
+                <span class="heart">❤️</span>
+            </div>
+            <button class="btn" onclick="startQuestions()">Let's Reminisce 💫</button>
+        </div>
+
+        <!-- Question 1 -->
+        <div class="screen" id="q1">
+            <div class="progress">
+                <div class="progress-bar" style="width: 20%;"></div>
+            </div>
+            <div class="question-number">Question 1 of 5</div>
+            <div class="emoji">🌅</div>
+            <div class="question">How was the trip with me?</div>
+            <button class="btn-option" onclick="nextQuestion(2)">Absolutely Amazing! ✨</button>
+            <button class="btn-option" onclick="nextQuestion(2)">Unforgettable Moments 💫</button>
+            <button class="btn-option" onclick="nextQuestion(2)">The Best Journey Ever! 🌟</button>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="screen" id="q2">
+            <div class="progress">
+                <div class="progress-bar" style="width: 40%;"></div>
+            </div>
+            <div class="question-number">Question 2 of 5</div>
+            <div class="emoji">🎭</div>
+            <div class="question">What was your favorite moment?</div>
+            <button class="btn-option" onclick="nextQuestion(3)">Every single moment with you 💕</button>
+            <button class="btn-option" onclick="nextQuestion(3)">The laughter we shared 😄</button>
+            <button class="btn-option" onclick="nextQuestion(3)">The quiet moments together 🌙</button>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="screen" id="q3">
+            <div class="progress">
+                <div class="progress-bar" style="width: 60%;"></div>
+            </div>
+            <div class="question-number">Question 3 of 5</div>
+            <div class="emoji">🌟</div>
+            <div class="question">Did I make you smile during the journey?</div>
+            <button class="btn-option" onclick="nextQuestion(4)">More times than I can count! 😊</button>
+            <button class="btn-option" onclick="nextQuestion(4)">You always do! 🥰</button>
+            <button class="btn-option" onclick="nextQuestion(4)">Every single day! ✨</button>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="screen" id="q4">
+            <div class="progress">
+                <div class="progress-bar" style="width: 80%;"></div>
+            </div>
+            <div class="question-number">Question 4 of 5</div>
+            <div class="emoji">🎒</div>
+            <div class="question">Would you go on another adventure with me?</div>
+            <button class="btn-option" onclick="nextQuestion(5)">In a heartbeat! 💓</button>
+            <button class="btn-option" onclick="nextQuestion(5)">Anywhere, anytime! 🌍</button>
+            <button class="btn-option" onclick="nextQuestion(5)">Already planning the next one! 🗺️</button>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="screen" id="q5">
+            <div class="progress">
+                <div class="progress-bar" style="width: 100%;"></div>
+            </div>
+            <div class="question-number">Question 5 of 5</div>
+            <div class="emoji">💝</div>
+            <div class="question">What made this trip special?</div>
+            <button class="btn-option" onclick="showPhotos()">Being with you! 💕</button>
+            <button class="btn-option" onclick="showPhotos()">Creating memories together 📸</button>
+            <button class="btn-option" onclick="showPhotos()">Everything about it! ✨</button>
+        </div>
+
+        <!-- Photos Screen -->
+        <div class="screen" id="photos">
+            <div class="emoji">📸</div>
+            <h1>Our Beautiful Memories</h1>
+            <p>Every photo tells our story...<br>Let's relive these precious moments together! 💕</p>
+            
+            <div class="photo-grid" id="photoGrid">
+                <!-- Photos will be loaded here -->
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <p style="font-size: 0.9em; color: #999;">Click on any photo to view full size</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const photos = [
+            'photo1.jpg',
+            'photo2.jpg',
+            'photo3.jpg',
+            'photo4.jpg',
+            'photo5.jpg',
+            'photo6.jpg'
+            // Add more photo filenames here
+        ];
+
+        function startQuestions() {
+            document.getElementById('welcome').classList.remove('active');
+            document.getElementById('q1').classList.add('active');
+            createSparkles();
+        }
+
+        function nextQuestion(num) {
+            const current = document.querySelector('.screen.active');
+            current.classList.remove('active');
+            document.getElementById('q' + num).classList.add('active');
+            createSparkles();
+        }
+
+        function showPhotos() {
+            const current = document.querySelector('.screen.active');
+            current.classList.remove('active');
+            document.getElementById('photos').classList.add('active');
+            loadPhotos();
+            createSparkles();
+        }
+
+        function loadPhotos() {
+            const grid = document.getElementById('photoGrid');
+            grid.innerHTML = '';
+            
+            photos.forEach((photo, index) => {
+                const img = document.createElement('img');
+                img.src = photo;
+                img.className = 'photo-item';
+                img.alt = `Memory ${index + 1}`;
+                img.style.animationDelay = `${index * 0.1}s`;
+                img.onclick = () => window.open(photo, '_blank');
+                
+                // Add fade in animation
+                img.style.opacity = '0';
+                setTimeout(() => {
+                    img.style.transition = 'opacity 0.5s ease';
+                    img.style.opacity = '1';
+                }, index * 100);
+                
+                grid.appendChild(img);
+            });
+        }
+
+        function createSparkles() {
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    sparkle.innerHTML = '✨';
+                    sparkle.style.left = Math.random() * window.innerWidth + 'px';
+                    sparkle.style.top = Math.random() * window.innerHeight + 'px';
+                    sparkle.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                    document.body.appendChild(sparkle);
+                    setTimeout(() => sparkle.remove(), 1000);
+                }, i * 100);
+            }
+        }
+
+        // Add sparkle on mouse click
+        document.addEventListener('click', (e) => {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.innerHTML = '💕';
+            sparkle.style.left = e.clientX + 'px';
+            sparkle.style.top = e.clientY + 'px';
+            document.body.appendChild(sparkle);
+            setTimeout(() => sparkle.remove(), 1000);
+        });
+    </script>
+</body>
+</html>
